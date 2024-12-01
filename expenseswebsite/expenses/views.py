@@ -1,15 +1,3 @@
-# from django.shortcuts import render
-
-# # Create your views here.
-
-# def index(request):
-#     return render(request, 'expenses/index.html')
-
-
-# def add-expenses(request):
-#     return render(request, 'expenses/add-expense.html')
-
-
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -35,23 +23,6 @@ def search_expenses(request):
             category__icontains=search_str, owner=request.user)
         data = expenses.values()
         return JsonResponse(list(data), safe=False)
-
-
-# @login_required(login_url='/authentication/login')
-# def index(request):
-#     categories = Category.objects.all()
-#     expenses = Expense.objects.filter(owner=request.user)
-#     paginator = Paginator(expenses, 10)
-#     page_number = request.GET.get('page')
-#     page_obj = Paginator.get_page(paginator, page_number)
-#     currency = UserPreference.objects.get(user=request.user).currency
-#     context = {
-#         'expenses': expenses,
-#         'page_obj': page_obj,
-#         'currency': currency
-#     }
-#     return render(request, 'expenses/index.html', context)
-
 
 
 @login_required(login_url='/authentication/login')
@@ -185,11 +156,6 @@ def stats_view(request):
 
 
 
-
-
-
-
-#  My code
 
 @login_required(login_url='/authentication/login')
 def monthly_expense_summary(request):
