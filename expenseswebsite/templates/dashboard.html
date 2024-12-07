@@ -15,4 +15,30 @@
 <canvas class="my-4 w-100" id="monthlySummaryChart" width="900" height="380"></canvas>
 
 
+
+<div class="recent-transactions mt-5">
+  <h2>Recent Transactions</h2>
+  <table class="table table-striped">
+  <thead>
+  <tr>
+  <th>Date</th>
+  <th>Amount</th>
+  <th>Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  {% for transaction in transactions %}
+  <tr>
+  <td>{{ transaction.date }}</td>
+  <td style="color: {% if transaction.type == 'Expense' %}red{% else %}green{% endif %};">{{ transaction.amount }}</td>
+  <td>{{ transaction.description }}</td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+
+
+
+
 {% endblock %}

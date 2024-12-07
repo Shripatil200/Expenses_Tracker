@@ -11,7 +11,33 @@ from userincome.models import UserIncome
 
 @login_required(login_url='/authentication/login')
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    transactions = []
+    incomes = UserIncome.objects.filter(owner=request.user).values('date', 'amount', 'description')[:30]
+    expenses = Expense.objects.filter(owner=request.user).values('date', 'amount', 'description')[:30]
+    for income in incomes:
+        transactions.append({
+            'date': income['date'],
+            'type': 'Income',
+            'amount': income['amount'],
+            'description': income['description']
+        })
+    for expense in expenses:
+        transactions.append({
+            'date': expense['date'],
+            'type': 'Expense',
+            'amount': expense['amount'],
+            'description': expense['description']
+        })
+    transactions.sort(key=lambda x: x['date'], reverse=True)
+    return render(request, 'dashboard.html', {'transactions': transactions})
+
+
+
+
+
+
+
+
 
 @login_required(login_url='/authentication/login')
 def dashboard_data(request):
